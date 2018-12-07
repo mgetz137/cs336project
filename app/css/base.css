@@ -5,6 +5,7 @@ body {
   line-height: 1.7;
   margin: 0;
   padding: 30px;
+  color: #435;
 }
 
 a {
@@ -30,6 +31,7 @@ h1, h2, h3, h4 {
   font-weight: bold;
   margin: 0 0 15px;
   padding: 0;
+	color: #435;
 }
 
 h1 {
@@ -57,3 +59,4 @@ p, ul {
 ul {
   padding-left: 30px;
 }
+
