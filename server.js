@@ -1,13 +1,6 @@
 /**
- * This file provided by Facebook is for non-commercial testing and evaluation
- * purposes only. Facebook reserves all rights not expressly granted.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * CS366 Project
+ * Austin Gibson, Daniel Garcia, Matthew Getz
  */
 
 var path = require('path');
@@ -31,56 +24,59 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get('/api/users', function(req, res) {
-    db.collection("users").find({}).toArray(function(err, docs) {
+app.get('/api/maps', function(req, res) {
+    db.collection("maps").find({}).toArray(function(err, docs) {
         if (err) throw err;
         res.json(docs);
     });
 });
 
-app.post('/api/users', function(req, res) {
-    var newComment = {
+app.post('/api/maps', function(req, res) {
+    var newMap = {
         id: Date.now(),
-        author: req.body.author,
-        text: req.body.text,
+        mapID: req.body.mapID,
+        state: req.body.state,
+        year: req.body.year,
+        country: req.body.country,
+        type: req.body.type
     };
-    db.collection("users").insertOne(newComment, function(err, result) {
+    db.collection("maps").insertOne(newMap, function(err, result) {
         if (err) throw err;
-        db.collection("users").find({}).toArray(function(err, docs) {
+        db.collection("maps").find({}).toArray(function(err, docs) {
             if (err) throw err;
             res.json(docs);
         });
     });
 });
 
-app.get('/api/users/:id', function(req, res) {
-    db.collection("users").find({"id": Number(req.params.id)}).toArray(function(err, docs) {
+app.get('/api/comments/:id', function(req, res) {
+    db.collection("comments").find({"id": Number(req.params.id)}).toArray(function(err, docs) {
         if (err) throw err;
         res.json(docs);
     });
 });
 
-app.put('/api/users/:id', function(req, res) {
+app.put('/api/comments/:id', function(req, res) {
     var updateId = Number(req.params.id);
     var update = req.body;
-    db.collection('users').updateOne(
+    db.collection('comments').updateOne(
         { id: updateId },
         { $set: update },
         function(err, result) {
             if (err) throw err;
-            db.collection("users").find({}).toArray(function(err, docs) {
+            db.collection("comments").find({}).toArray(function(err, docs) {
                 if (err) throw err;
                 res.json(docs);
             });
         });
 });
 
-app.delete('/api/users/:id', function(req, res) {
-    db.collection("users").deleteOne(
+app.delete('/api/comments/:id', function(req, res) {
+    db.collection("comments").deleteOne(
         {'id': Number(req.params.id)},
         function(err, result) {
             if (err) throw err;
-            db.collection("users").find({}).toArray(function(err, docs) {
+            db.collection("comments").find({}).toArray(function(err, docs) {
                 if (err) throw err;
                 res.json(docs);
             });
@@ -95,9 +91,15 @@ app.listen(app.get('port'), function() {
 
 // This assumes that the MongoDB password has been set as an environment variable.
 var mongoURL = 'mongodb://DACcs336:' +
-	       process.env.MONGO_PASSWORD +
+           process.env.MONGO_PASSWORD +
            '@ds157742.mlab.com:57742/cs336project';
 MongoClient.connect(mongoURL, function(err, dbConnection) {
     if (err) throw err;
     db = dbConnection;
+
+    db.collection('maps').find().toArray(function (err, result) {
+        if (err) throw err
+
+        console.log(result);
+    })
 });

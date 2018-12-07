@@ -1,15 +1,16 @@
 import React from 'react';
 import $ from 'jquery';
 
-import CommentList from './userList';
-import CommentForm from './userForm';
+import MapList from './mapList';
+import MapForm from './mapForm';
 import { API_URL, POLL_INTERVAL } from './global';
+
 
 module.exports = React.createClass({
     getInitialState: function() {
         return {data: [], _isMounted: false};
     },
-    loadCommentsFromServer: function() {
+    loadMapsFromServer: function() {
         if (this.state._isMounted) {
             $.ajax({
                 url: API_URL,
@@ -24,29 +25,28 @@ module.exports = React.createClass({
                 }.bind(this));
         }
     },
-    handleCommentSubmit: function(user) {
-        var users = this.state.data;
-        user.id = Date.now();
-        var newUsers = users.concat([user]);
-        this.setState({data: newUsers});
+    handleMapSubmit: function(map) {
+        var maps= this.state.data;
+        var newMaps = maps.concat([map]);
+        this.setState({data: newMaps});
         $.ajax({
             url: API_URL,
             dataType: 'json',
             type: 'POST',
-            data: user,
+            data: map,
         })
          .done(function(result){
              this.setState({data: result});
          }.bind(this))
          .fail(function(xhr, status, errorThrown) {
-             this.setState({data: users});
+             this.setState({data: maps});
              console.error(API_URL, status, errorThrown.toString());
          }.bind(this));
     },
     componentDidMount: function() {
         this.state._isMounted = true;
-        this.loadCommentsFromServer();
-        setInterval(this.loadUsersFromServer, POLL_INTERVAL);
+        this.loadMapsFromServer();
+        setInterval(this.loadMapsFromServer, POLL_INTERVAL);
     },
     componentWillUnmount: function() {
         // Reset the isMounted flag so that the loadCommentsFromServer callback
@@ -58,10 +58,10 @@ module.exports = React.createClass({
     },
     render: function() {
         return (
-            <div className="userBox">
-                <h1>Users</h1>
-                <UserList data={this.state.data} />
-                <UserForm onUserSubmit={this.handleUserSubmit} />
+            <div className="mapBox">
+                <h1>Maps</h1>
+                <MapList data={this.state.data} />
+                <MapForm onMapSubmit={this.handleMapSubmit} />
             </div>
         );
     }

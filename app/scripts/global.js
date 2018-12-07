@@ -1,4 +1,4 @@
-const API_URL = "/api/users";
+const API_URL = 'api/maps';
 const POLL_INTERVAL = 2000;
 
-module.exports = {API_URL, POLL_INTERVAL};
+module.exports = { API_URL, POLL_INTERVAL };

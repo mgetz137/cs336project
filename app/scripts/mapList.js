@@ -1,22 +1,25 @@
 import React from 'react';
+import $ from 'jquery';
+import Remarkable from 'remarkable';
 
-import User from './users';
+import Map from './map';
 
 module.exports = React.createClass({
-    render: function () {
-        var userNodes = this.props.data.map(function (users) {
-            return (
-                <User id={user.id} role={user.role}
-                         key={user.id}>
-                    {user.handle}
-                </User>
-            );
-        });
-        return (
-            <div className="userList">
-                {userNodes}
-            </div>
-        );
-    }
-});
- 
+  render: function() {
+    var mapNodes = this.props.data.map(function(map) {
+      return (
+        <Map mapID={map.mapID}>
+          {map.state}
+          {map.year}
+          {map.country}
+          {map.type}
+        </Map>
+      );
+    });
+    return (
+      <div className="mapList">
+        {mapNodes}
+      </div>
+    );
+  }
+})

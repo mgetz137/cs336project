@@ -1,6 +1,7 @@
 import React from 'react';
 import Remarkable from 'remarkable';
-import {Link} from 'react-router';
+//import {Link} from 'react-router';
+// code for link: <Link to={'/' + this.props.id}>Edit</Link>
 
 module.exports = React.createClass({
     rawMarkup: function () {
@@ -10,12 +11,11 @@ module.exports = React.createClass({
     },
     render: function () {
         return (
-            <div className="user">
-                <h2 className="userRole">
-                    {this.props.role}
+            <div className="map">
+                <h2 className="mapID">
+                    {this.props.mapID}
                 </h2>
                 <span dangerouslySetInnerHTML={this.rawMarkup()}/>
-                <Link to={'/' + this.props.id}>Edit</Link>
             </div>
         );
     }
