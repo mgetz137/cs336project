@@ -12,10 +12,12 @@ module.exports = React.createClass({
   render: function() {
     var mapNodes = this.props.data.map(function(map) {
       return (
-        <Map mapID={map.mapID}>
-          {map.state}
-          {map.year}
+        <Map title={map.title} key={map.mapID}>
           {map.country}
+          {map.state}
+          {map.city}
+          {map.year}
+          {map.scale}
           {map.type}
         </Map>
       );

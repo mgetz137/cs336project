@@ -34,10 +34,12 @@ app.get('/api/maps', function(req, res) {
 app.post('/api/maps', function(req, res) {
     var newMap = {
         id: Date.now(),
-        mapID: req.body.mapID,
-        state: req.body.state,
-        year: req.body.year,
+        title: req.body.title,
         country: req.body.country,
+        state: req.body.state,
+        city: req.body.city,
+        year: req.body.year,
+        scale: req.body.scale,
         type: req.body.type
     };
     db.collection("maps").insertOne(newMap, function(err, result) {
@@ -49,39 +51,6 @@ app.post('/api/maps', function(req, res) {
     });
 });
 
-app.get('/api/comments/:id', function(req, res) {
-    db.collection("comments").find({"id": Number(req.params.id)}).toArray(function(err, docs) {
-        if (err) throw err;
-        res.json(docs);
-    });
-});
-
-app.put('/api/comments/:id', function(req, res) {
-    var updateId = Number(req.params.id);
-    var update = req.body;
-    db.collection('comments').updateOne(
-        { id: updateId },
-        { $set: update },
-        function(err, result) {
-            if (err) throw err;
-            db.collection("comments").find({}).toArray(function(err, docs) {
-                if (err) throw err;
-                res.json(docs);
-            });
-        });
-});
-
-app.delete('/api/comments/:id', function(req, res) {
-    db.collection("comments").deleteOne(
-        {'id': Number(req.params.id)},
-        function(err, result) {
-            if (err) throw err;
-            db.collection("comments").find({}).toArray(function(err, docs) {
-                if (err) throw err;
-                res.json(docs);
-            });
-        });
-});
 
 app.use('*', express.static(APP_PATH));
 

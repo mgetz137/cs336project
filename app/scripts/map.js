@@ -12,8 +12,8 @@ module.exports = React.createClass({
     render: function () {
         return (
             <div className="map">
-                <h2 className="mapID">
-                    {this.props.mapID}
+                <h2 className="mapTitle">
+                    {this.props.title}
                 </h2>
                 <span dangerouslySetInnerHTML={this.rawMarkup()}/>
             </div>

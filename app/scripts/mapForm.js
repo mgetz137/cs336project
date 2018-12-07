@@ -7,66 +7,101 @@ import $ from 'jquery';
 
 import '../css/base.css';
 
+var mapFormStyle = {
+  border: '5px solid gray',
+  borderRadius: '5px',
+  margin: '10px',
+  width: '400px'
+};
+
 module.exports = React.createClass({
   getInitialState: function() {
-    return {mapID: '', state:'', year:'', country:'', type:''};
+    return {title: '', country:'', state:'', city:'', year:'', scale:'', type:''};
   },
-  handleMapIDChange: function(e) {
-    this.setState({mapID: e.target.value});
-  },
-  handleStateChange: function(e) {
-    this.setState({state: e.target.value});
-  },
-  handleYearChange: function(e) {
-    this.setState({year: e.target.value});
+  handleTitleChange: function(e) {
+    this.setState({title: e.target.value});
   },
   handleCountryChange: function(e) {
     this.setState({country: e.target.value});
   },
+  handleStateChange: function(e) {
+    this.setState({state: e.target.value});
+  },
+  handleCityChange: function(e) {
+    this.setState({city: e.target.value});
+  },
+  handleYearChange: function(e) {
+    this.setState({year: e.target.value});
+  },
+  handleScaleChange: function(e) {
+    this.setState({scale: e.target.value});
+  },
   handleTypeChange: function(e) {
     this.setState({type: e.target.value});
   },
+  
   handleSubmit: function(e) {
     e.preventDefault();
-    var mapID = this.state.mapID.trim();
+    var title = this.state.title.trim();
     var state = this.state.state.trim();
     var year = this.state.year.trim();
     var country = this.state.country.trim();
     var type = this.state.type.trim();
-    if (!mapID || !state || !year || !country || !type) {
+    var city = this.state.city.trim();
+    var scale= this.state.scale.trim();
+    if (!title || !state || !year || !country || !type || !city || !scale) {
       return;
     }
-    this.props.onMapSubmit({mapID: mapID, state: state, year: year, country: country, type: type});
-    this.setState({mapID: '', state:'', year:'', country:'', type:''});
+    this.props.onMapSubmit({title:title, country: country, state: state, city: city, year: year, scale: scale, type: type});
+    this.setState({title: '', country: '', state: '', city: '', year: '', scale: '', type: ''});
   },
   render: function() {
     return (
-      <form className="mapForm" onSubmit={this.handleSubmit}>
+      <form className="mapForm" style={mapFormStyle} onSubmit={this.handleSubmit}>
         <h3> Add New Map </h3>
+        <p> Title </p>
         <input
           type="text"
-          placeholder="Map ID..."
-          value={this.state.mapID}
-          onChange={this.handleMapIDChange}
+          placeholder="Title..."
+          value={this.state.title}
+          onChange={this.handleTitleChange}
         />
-        <input
-          type="text"
-          placeholder="state...."
-          value={this.state.state}
-          onChange={this.handleStateChange}
-        />
-        <input
-          type="text"
-          placeholder="year...."
-          value={this.state.year}
-          onChange={this.handleYearChange}
-        />
+        <p> Country </p>
         <input
           type="text"
           placeholder="country......"
           value={this.state.country}
           onChange={this.handleCountryChange}
         />
+        <p> State </p>
+        <input
+          type="text"
+          placeholder="state...."
+          value={this.state.state}
+          onChange={this.handleStateChange}
+        />
+        <p> City </p>
+        <input
+          type="text"
+          placeholder="city...."
+          value={this.state.city}
+          onChange={this.handleCityChange}
+        />
+        <p> Year </p>
+        <input
+          type="text"
+          placeholder="year...."
+          value={this.state.year}
+          onChange={this.handleYearChange}
+        />
+        <p> Scale </p>
+        <input
+          type="text"
+          placeholder="scale...."
+          value={this.state.scale}
+          onChange={this.handleScaleChange}
+        />
+        <p> Type </p>
         <input
           type="text"
           placeholder="type......"
