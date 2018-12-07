@@ -10,6 +10,15 @@ module.exports = {
         path: __dirname + '/dist',
         filename: '/bundle.js'
     },
+    devServer: {
+        port: 3001,
+        proxy: { '/api/*': 'http://localhost:3000' },
+        colors: true,
+        historyApiFallback: true,
+        inline: true,
+        hot: true,
+	watchContentBase: true
+    },
     module: {
         loaders: [
             { test: /\.jsx?$/, exclude: /node_modules/, loader: "babel-loader" },

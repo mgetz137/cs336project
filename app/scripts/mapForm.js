@@ -1,6 +1,8 @@
 import React from 'react';
 import $ from 'jquery';
 
+import '../css/base.css';
+
 module.exports = React.createClass({
   getInitialState: function() {
     return {mapID: '', state:'', year:'', country:'', type:''};
@@ -36,6 +38,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <form className="mapForm" onSubmit={this.handleSubmit}>
+        <h3> Add New Map </h3>
         <input
           type="text"
           placeholder="Map ID..."
