@@ -1,3 +1,7 @@
+/*
+/CS 336 Final Project
+/Austin Gibson, Matt Getz, Daniel Garcia
+*/
 import React from 'react';
 import $ from 'jquery';
 import Remarkable from 'remarkable';
