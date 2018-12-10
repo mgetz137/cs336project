@@ -13,7 +13,7 @@ module.exports = React.createClass({
     var mapNodes = this.props.data.map(function(map) {
       return (
         <Map id={map.mapID} title={map.title} key={map.mapID} country={map.country} 
-          state={map.state} city={map.city} year={map.year} scale={map.scale} type={map.type} image={map.imgUrl}>
+          state={map.state} city={map.city} year={map.year} scale={map.scale} type={map.type} imgURL={map.imgUrl}>
             {map.mapID}
         </Map>
       );
