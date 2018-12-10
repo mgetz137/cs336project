@@ -16,6 +16,8 @@ module.exports = React.createClass({
                     {this.props.title}
                 </h2>
                 <span dangerouslySetInnerHTML={this.rawMarkup()}/>
+                <section className="mapCountry">Country: {this.props.country} State: {this.props.state} 
+                    City: {this.props.city} Year: {this.props.year} Scale: {this.props.scale} Type: {this.props.type} Image: {this.props.image}</section>
                 <Link to={'/' + this.props.id}>Edit</Link>
             </div>
         );
