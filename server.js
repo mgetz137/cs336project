@@ -52,7 +52,6 @@ app.post('/api/maps', function(req, res) {
 });
 
 app.get('/api/maps/:mapID', function(req, res) {
-    console.log(req.params.mapID);
     db.collection("maps").find({"mapID": Number(req.params.mapID)}).toArray(function(err, docs) {
         if (err) throw err;
         res.json(docs);
