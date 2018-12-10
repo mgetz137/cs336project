@@ -33,7 +33,7 @@ app.get('/api/maps', function(req, res) {
 
 app.post('/api/maps', function(req, res) {
     var newMap = {
-        id: Date.now(),
+        mapID: Date.now(),
         title: req.body.title,
         country: req.body.country,
         state: req.body.state,
@@ -49,6 +49,41 @@ app.post('/api/maps', function(req, res) {
             res.json(docs);
         });
     });
+});
+
+app.get('/api/maps/:mapID', function(req, res) {
+    console.log(req.params.mapID);
+    db.collection("maps").find({"mapID": Number(req.params.mapID)}).toArray(function(err, docs) {
+        if (err) throw err;
+        res.json(docs);
+    });
+});
+
+app.put('/api/maps/:mapID', function(req, res) {
+    var updateId = Number(req.params.mapID);
+    var update = req.body;
+    db.collection('maps').updateOne(
+        { mapID: updateId },
+        { $set: update },
+        function(err, result) {
+            if (err) throw err;
+            db.collection("maps").find({}).toArray(function(err, docs) {
+                if (err) throw err;
+                res.json(docs);
+            });
+        });
+});
+
+app.delete('/api/maps/:mapID', function(req, res) {
+    db.collection("maps").deleteOne(
+        {'mapID': Number(req.params.mapID)},
+        function(err, result) {
+            if (err) throw err;
+            db.collection("maps").find({}).toArray(function(err, docs) {
+                if (err) throw err;
+                res.json(docs);
+            });
+        });
 });
 
 

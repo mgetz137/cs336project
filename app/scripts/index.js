@@ -8,13 +8,13 @@ import ReactDOM from 'react-dom';
 import { Router, Route, Redirect, browserHistory } from 'react-router';
 
 import MapBox from './mapBox';
-//import CommentEdit from './commentEdit';
-//code for edit : <Route path="/:id" component={CommentEdit} />
+import MapEdit from './mapEdit';
 
 import '../css/base.css';
 
 ReactDOM.render((
     <Router history={browserHistory}>
         <Route path="/" component={MapBox}/>
+        <Route path="/:mapID" component={MapEdit} />
     </Router>
 ), document.getElementById('content'));

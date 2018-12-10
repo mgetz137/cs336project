@@ -11,7 +11,7 @@ var mapFormStyle = {
   border: '5px solid gray',
   borderRadius: '5px',
   margin: '10px',
-  width: '400px'
+  width: '400px',
 };
 
 module.exports = React.createClass({

@@ -10,7 +10,6 @@ import MapList from './mapList';
 import MapForm from './mapForm';
 import { API_URL, POLL_INTERVAL } from './global';
 
-
 module.exports = React.createClass({
     getInitialState: function() {
         return {data: [], _isMounted: false};
