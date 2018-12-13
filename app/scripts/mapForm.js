@@ -10,8 +10,8 @@ import '../css/base.css';
 var mapFormStyle = {
   border: '5px solid gray',
   borderRadius: '5px',
-  margin: '10px',
-  width: '400px',
+  margin: '0px auto',
+  width: '400px'
 };
 
 module.exports = React.createClass({

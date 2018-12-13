@@ -4,6 +4,7 @@ import $ from 'jquery';
 
 import {API_URL} from './global';
 
+
 module.exports = React.createClass({
     getInitialState: function () {
         return {title: '', country:'', state:'', city:'', year:'', scale:'', type:''};
@@ -92,7 +93,7 @@ module.exports = React.createClass({
     render: function () {
         return (
             <div>
-                <form className="mapForm">
+                <form className="mapForm" >
                     <h1>Map Edit - {this.props.params.mapID}</h1>
                     <input
                         type="text"

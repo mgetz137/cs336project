@@ -63,7 +63,7 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div className="mapBox">
-                <h1>Maps</h1>
+                <h1>Geography Department Maps</h1>
                 <MapList data={this.state.data} />
                 <MapForm onMapSubmit={this.handleMapSubmit} />
             </div>
