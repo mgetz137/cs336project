@@ -16,7 +16,7 @@ var mapFormStyle = {
 
 module.exports = React.createClass({
   getInitialState: function() {
-    return {title: '', country:'', state:'', city:'', year:'', scale:'', type:''};
+    return {title: '', country:'', state:'', city:'', year:'', scale:'', type:'', imgUrl:''};
   },
   handleTitleChange: function(e) {
     this.setState({title: e.target.value});
@@ -39,6 +39,9 @@ module.exports = React.createClass({
   handleTypeChange: function(e) {
     this.setState({type: e.target.value});
   },
+  handleURLChange: function(e) {
+    this.setState({imgUrl: e.target.value});
+  },
   
   handleSubmit: function(e) {
     e.preventDefault();
@@ -49,16 +52,16 @@ module.exports = React.createClass({
     var type = this.state.type.trim();
     var city = this.state.city.trim();
     var scale= this.state.scale.trim();
-    if (!title || !state || !year || !country || !type || !city || !scale) {
+    var imgUrl= this.state.imgUrl.trim();
+    if (!title || !state || !year || !country || !type || !city || !scale || !imgUrl) {
       return;
     }
-    this.props.onMapSubmit({title:title, country: country, state: state, city: city, year: year, scale: scale, type: type});
-    this.setState({title: '', country: '', state: '', city: '', year: '', scale: '', type: ''});
+    this.props.onMapSubmit({title:title, country: country, state: state, city: city, year: year, scale: scale, type: type, imgUrl: imgUrl});
+    this.setState({title: '', country: '', state: '', city: '', year: '', scale: '', type: '', imgUrl: ''});
   },
   render: function() {
     return (
       <form className="mapForm" style={mapFormStyle} onSubmit={this.handleSubmit}>
-        <h3> Add New Map </h3>
         <p> Title </p>
         <input
           type="text"
@@ -107,6 +110,13 @@ module.exports = React.createClass({
           placeholder="type......"
           value={this.state.type}
           onChange={this.handleTypeChange}
+        />
+        <p> Image URL </p>
+        <input
+          type="text"
+          placeholder="url......"
+          value={this.state.imgUrl}
+          onChange={this.handleURLChange}
         />
         <input type="submit" value="Post" />
       </form>

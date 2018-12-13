@@ -4,10 +4,25 @@ import $ from 'jquery';
 
 import {API_URL} from './global';
 
+var mapEditStyle = {
+  border: '5px solid gray',
+  borderRadius: '5px',
+  margin: '0px auto',
+  width: '400px'
+};
+
+var inputStyle = {
+    display: 'block',
+    margin: '0px auto',
+    border: '2px solid #ccc',
+    borderRadius: '4px',
+    backgroundColor: '#f8f8f8',
+    textAlign: 'center'
+}
 
 module.exports = React.createClass({
     getInitialState: function () {
-        return {title: '', country:'', state:'', city:'', year:'', scale:'', type:''};
+        return {title: '', country:'', state:'', city:'', year:'', scale:'', type:'', imgUrl:''};
     },
     componentDidMount: function () {
         this.loadData();
@@ -51,6 +66,9 @@ module.exports = React.createClass({
     handleTypeChange: function(e) {
     this.setState({type: e.target.value});
     },
+    handleURLChange: function(e) {
+    this.setState({imgUrl: e.target.value});
+    },
     contextTypes: {
         router: React.PropTypes.object
     },
@@ -62,7 +80,8 @@ module.exports = React.createClass({
             city: this.state.city.trim(),
             year: this.state.year.trim(),
             scale: this.state.scale.trim(),
-            type: this.state.type.trim()
+            type: this.state.type.trim(),
+            imgUrl: this.state.imgUrl.trim()
         };
         $.ajax({
             url: API_URL + "/" + this.props.params.mapID,
@@ -95,45 +114,68 @@ module.exports = React.createClass({
             <div>
                 <form className="mapForm" >
                     <h1>Map Edit - {this.props.params.mapID}</h1>
+                    <div style={mapEditStyle}>
+                    Title:
                     <input
+                        style={inputStyle}
                         type="text"
                         value={this.state.title}
                         onChange={this.handleTitleChange}
                     />
+                    Country:
                     <input
+                        style={inputStyle}
                         type="text"
                         value={this.state.country}
                         onChange={this.handleCountryChange}
                     />
+                    State:
                     <input
+                        style={inputStyle}
                         type="text"
                         value={this.state.state}
                         onChange={this.handleStateChange}
                     />
+                    City:
                     <input
+                        style={inputStyle}
                         type="text"
                         value={this.state.city}
                         onChange={this.handleCityChange}
                     />
+                    Year:
                     <input
+                        style={inputStyle}
                         type="text"
                         value={this.state.year}
                         onChange={this.handleYearChange}
                     />
+                    Scale:
                     <input
+                        style={inputStyle}
                         type="text"
                         value={this.state.scale}
                         onChange={this.handleScaleChange}
                     />
+                    Type:
                     <input
+                        style={inputStyle}
                         type="text"
                         value={this.state.type}
                         onChange={this.handleTypeChange}
+                    />
+                    Image URL:
+                    <input
+                        style={inputStyle}
+                        type="text"
+                        value={this.state.imgUrl}
+                        onChange={this.handleURLChange}
                     />
                     <button type="button" onClick={this.handleUpdate}>Update
                     </button>
                     <button type="button" onClick={this.handleDelete}>Delete
                     </button>
+                    </div>
                 </form>
                 <Link to='/'>Cancel</Link>
             </div>

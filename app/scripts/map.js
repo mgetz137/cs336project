@@ -8,15 +8,29 @@ var imgStyle = {
     height: '200px',
 }
 
+var mapStyle = {
+    backgroundColor: '#4CAF50',
+    border: '5px solid #4CAF50',
+    borderRadius: '5px',
+    marginTop: '3px',
+    marginBottom: '3px',
+    color: 'white'
+}
+
 module.exports = React.createClass({
     rawMarkup: function () {
         var md = new Remarkable({html: true});
         var rawMarkup = md.render(this.props.children.toString());
         return {__html: rawMarkup};
     },
+    enterHandler: function() {
+        this.setState({
+            hover: true
+        });
+    },
     render: function () {
         return (
-            <div className="map">
+            <div className="map" style={mapStyle} onMouseEnter={this.enterHandler}>
                 <h2 className="map_title">
                     {this.props.title}
                 </h2>
@@ -26,9 +40,11 @@ module.exports = React.createClass({
                     <a href={this.props.imgUrl}>
                         <img src={this.props.imgUrl} style={imgStyle}/>
                     </a>
-                    <Link to={'/' + this.props.id} style={{display: 'block'}}>Edit</Link>
+                    <Link to={'/' + this.props.id} style={{display: 'block', color: 'white'}}>Edit</Link>
                 </div>
             </div>
         );
     }
 });
+
+

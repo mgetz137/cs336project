@@ -10,6 +10,15 @@ import MapList from './mapList';
 import MapForm from './mapForm';
 import { API_URL, POLL_INTERVAL } from './global';
 
+var row = {
+    display: 'flex'
+}
+
+var col = {
+    flex: '1',
+    padding: '1em'
+}
+
 module.exports = React.createClass({
     getInitialState: function() {
         return {data: [], _isMounted: false};
@@ -62,10 +71,15 @@ module.exports = React.createClass({
     },
     render: function() {
         return (
-            <div className="mapBox">
+            <div className="mapBox" style={row}>
+                <div style={col}>
                 <h1>Geography Department Maps</h1>
                 <MapList data={this.state.data} />
+                </div>
+                <div style={col}>
+                <h1> Add New Map </h1>
                 <MapForm onMapSubmit={this.handleMapSubmit} />
+                </div>
             </div>
         );
     }
