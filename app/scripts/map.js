@@ -12,8 +12,8 @@ var mapStyle = {
     backgroundColor: '#4CAF50',
     border: '5px solid #4CAF50',
     borderRadius: '5px',
-    marginTop: '3px',
-    marginBottom: '3px',
+    marginTop: '5px',
+    marginBottom: '5px',
     color: 'white'
 }
 
@@ -23,23 +23,19 @@ module.exports = React.createClass({
         var rawMarkup = md.render(this.props.children.toString());
         return {__html: rawMarkup};
     },
-    enterHandler: function() {
-        this.setState({
-            hover: true
-        });
-    },
     render: function () {
         return (
-            <div className="map" style={mapStyle} onMouseEnter={this.enterHandler}>
-                <h2 className="map_title">
+            <div className="map" style={mapStyle} >
+                
+                <Link to={'/display/'+ this.props.id} syle={{textDecoration: 'none'}}>
+                    <h2 className="map_title">
                     {this.props.title}
-                </h2>
+                    </h2>
+                </Link>
                 <span dangerouslySetInnerHTML={this.rawMarkup()}/>
+                
                 <div className="mapContent">
                     <section className="mapCountry">Country: {this.props.country} State: {this.props.state} City: {this.props.city} Year: {this.props.year} Scale: {this.props.scale} Type: {this.props.type}</section>
-                    <a href={this.props.imgUrl}>
-                        <img src={this.props.imgUrl} style={imgStyle}/>
-                    </a>
                     <Link to={'/' + this.props.id} style={{display: 'block', color: 'white'}}>Edit</Link>
                 </div>
             </div>

@@ -25,6 +25,7 @@ app.use(function(req, res, next) {
 });
 
 app.get('/api/maps', function(req, res) {
+    console.log('called /api/maps');
     db.collection("maps").find({}).toArray(function(err, docs) {
         if (err) throw err;
         res.json(docs);
@@ -52,11 +53,13 @@ app.post('/api/maps', function(req, res) {
 });
 
 app.get('/api/maps/:mapID', function(req, res) {
+    console.log('called /api/maps/id');
     db.collection("maps").find({"mapID": Number(req.params.mapID)}).toArray(function(err, docs) {
         if (err) throw err;
         res.json(docs);
     });
 });
+
 
 app.put('/api/maps/:mapID', function(req, res) {
     var updateId = Number(req.params.mapID);
@@ -83,6 +86,15 @@ app.delete('/api/maps/:mapID', function(req, res) {
                 res.json(docs);
             });
         });
+});
+
+
+app.get('/display/:mapID', function(req, res) {
+    console.log('called /api/maps/display');
+    db.collection("maps").find({"mapID": Number(req.params.mapID)}).toArray(function(err, docs) {
+        if (err) throw err;
+        res.json(docs);
+    });
 });
 
 
