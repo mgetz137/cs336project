@@ -32,6 +32,7 @@ app.get('/api/maps', function(req, res) {
     });
 });
 
+
 app.post('/api/maps', function(req, res) {
     var newMap = {
         mapID: Date.now(),
@@ -41,7 +42,8 @@ app.post('/api/maps', function(req, res) {
         city: req.body.city,
         year: req.body.year,
         scale: req.body.scale,
-        type: req.body.type
+        type: req.body.type,
+        imgUrl: req.body.imgUrl
     };
     db.collection("maps").insertOne(newMap, function(err, result) {
         if (err) throw err;
@@ -96,7 +98,6 @@ app.get('/display/:mapID', function(req, res) {
         res.json(docs);
     });
 });
-
 
 app.use('*', express.static(APP_PATH));
 

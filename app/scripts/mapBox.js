@@ -10,6 +10,7 @@ import MapList from './mapList';
 import MapForm from './mapForm';
 import { API_URL, POLL_INTERVAL } from './global';
 
+
 var row = {
     display: 'flex'
 }
@@ -19,12 +20,32 @@ var col = {
     padding: '1em'
 }
 
+var filterStyle = {
+    padding: '10px 10px',
+    borderRadius: '5px',
+    width: '200px'
+}
+
+
 module.exports = React.createClass({
     getInitialState: function() {
-        return {data: [], _isMounted: false};
+        return {data: [], dataList: [],_isMounted: false, _isInitial: true};
     },
     loadMapsFromServer: function() {
-        if (this.state._isMounted) {
+        if (this.state._isMounted && this.state._isInitial) {
+            $.ajax({
+                url: API_URL,
+                dataType: 'json',
+                cache: false,
+            })
+                .done(function (result) {
+                    this.setState({data: result});
+                    this.setState({dataList: result});
+                }.bind(this))
+                .fail(function (xhr, status, errorThrown) {
+                    console.error(API_URL, status, errorThrown.toString());
+                }.bind(this));
+        } else {
             $.ajax({
                 url: API_URL,
                 dataType: 'json',
@@ -69,16 +90,31 @@ module.exports = React.createClass({
         // See https://reactjs.org/blog/2015/12/16/ismounted-antipattern.html
         this.state._isMounted = false;
     },
+    filterData: function() {
+
+        var maps = this.state.data;
+        var newMaps = maps.filter(function(item) {
+            return item.type.toString().toLowerCase().search(event.target.value.toLowerCase()) !== -1;
+        });
+        
+        this.setState({dataList: newMaps});
+        this.state._isInitial = false;
+        
+    },
     render: function() {
         return (
             <div className="mapBox" style={row}>
                 <div style={col}>
-                <h1>Geography Department Maps</h1>
-                <MapList data={this.state.data} />
+                    <h1>Geography Department Maps</h1>
+                    <input type="text" style={filterStyle}
+                        placeholder="Search by map type" onChange={this.filterData}/>
+                    
+                    <MapList data={this.state.dataList} />
+
                 </div>
                 <div style={col}>
-                <h1> Add New Map </h1>
-                <MapForm onMapSubmit={this.handleMapSubmit} />
+                    <h1> Add New Map </h1>
+                    <MapForm onMapSubmit={this.handleMapSubmit} />
                 </div>
             </div>
         );
